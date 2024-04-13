@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 
 List<string> todos = [];
 
@@ -33,6 +32,49 @@ do
 
 	PrintOptionsMenu();
 } while (isUserChoiceCorrect is false);
+
+void SeeAllToDos()
+{
+	Console.WriteLine("------------------------------------------------");
+
+	if (todos.Count.Equals(0))
+	{
+		Console.WriteLine("No TODOs have been added yet.");
+		return;
+	}
+
+	for (int i = 0; i < todos.Count; i++)
+	{
+		Console.WriteLine($"{i + 1}. {todos[i]}");
+	}
+}
+
+void AddToDo()
+{
+	bool isTodoDescriptionCorrect = false;
+	do
+	{
+		Console.WriteLine("Enter the TODO description:");
+		string todoDescription = Console.ReadLine() ?? String.Empty;
+
+		if (string.IsNullOrWhiteSpace(todoDescription))
+		{
+			Console.WriteLine("The description cannot be empty.");
+			continue;
+		}
+
+		if (todos.Contains(todoDescription))
+		{
+			Console.WriteLine("The description must be unique.");
+			continue;
+		}
+
+		todos.Add(todoDescription);
+		Console.WriteLine($"TODO successfully added: {todoDescription}");
+
+		isTodoDescriptionCorrect = true;
+	} while (isTodoDescriptionCorrect is false);
+}
 
 void RemoveToDo()
 {
@@ -68,49 +110,6 @@ void RemoveToDo()
 	} while (isTodoRemoveOperationCorrect is false);
 
 	return;
-}
-
-void AddToDo()
-{
-	bool isTodoDescriptionCorrect = false;
-	do
-	{
-		Console.WriteLine("Enter the TODO description:");
-		string todoDescription = Console.ReadLine() ?? String.Empty;
-
-		if (string.IsNullOrWhiteSpace(todoDescription))
-		{
-			Console.WriteLine("The description cannot be empty.");
-			continue;
-		}
-
-		if (todos.Contains(todoDescription))
-		{
-			Console.WriteLine("The description must be unique.");
-			continue;
-		}
-
-		todos.Add(todoDescription);
-		Console.WriteLine($"TODO successfully added: {todoDescription}");
-
-		isTodoDescriptionCorrect = true;
-	} while (isTodoDescriptionCorrect is false);
-}
-
-void SeeAllToDos()
-{
-	Console.WriteLine("------------------------------------------------");
-
-	if (todos.Count.Equals(0))
-	{
-		Console.WriteLine("No TODOs have been added yet.");
-		return;
-	}
-
-	for (int i = 0; i < todos.Count; i++)
-	{
-		Console.WriteLine($"{i + 1}. {todos[i]}");
-	}
 }
 
 static void PrintOptionsMenu(bool isStartOffAppp = false)
