@@ -112,10 +112,10 @@ void RemoveToDo()
 	return;
 }
 
-static void PrintOptionsMenu(bool isStartOffAppp = false)
+static void PrintOptionsMenu(bool isStartOffApp = false)
 {
 	Console.WriteLine();
-	if (isStartOffAppp) Console.WriteLine("Hello!");
+	if (isStartOffApp) Console.WriteLine("Hello!");
 
 	Console.WriteLine("What do you want to do?");
 	Console.WriteLine("[S]ee all TODO's");
