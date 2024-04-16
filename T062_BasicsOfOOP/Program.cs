@@ -1,5 +1,5 @@
 ﻿
-// Lesson 72. Encapsulation
+// Lesson 81. Properties
 
 
 Console.ReadKey();
