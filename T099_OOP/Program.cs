@@ -3,7 +3,7 @@ pizza.AddIngredient(new Cheddar());
 pizza.AddIngredient(new TomatoSauce());
 pizza.AddIngredient(new Mozzarella());
 
-Console.WriteLine(pizza.Describe());
+Console.WriteLine(pizza.ToString());
 
 Cheddar cheddar = new();
 Console.WriteLine(cheddar.PublicMethod());
@@ -29,24 +29,31 @@ foreach (var item in ingredients)
 	Console.WriteLine(item.Name);
 }
 
+Console.WriteLine();
+Console.WriteLine(cheddar);
+
 public class Pizza
 {
 	private readonly List<Ingredient> _ingredients = [];
-
 	public void AddIngredient(Ingredient ingredient) => _ingredients.Add(ingredient);
-
-	public string Describe() => $"This is a pizza with {string.Join(", ", _ingredients)}.";
+	public override string ToString() => $"This is a pizza with {string.Join(", ", _ingredients)}.";
 }
 
 public class Ingredient()
 {
+	public override string ToString() => Name;
 	public virtual string Name { get; } = "Some ingredient";
 	public string PublicMethod() => "This method is PUBLIC in the Ingredient class.";
 	protected string ProtectedMethod() => "This method is PROTECTED in the Ingredient class.";
 	private string PrivateMethod() => "This method is PRIVATE in the Ingredient class.";
 }
 
-public class Cheddar : Ingredient
+public class Cheese : Ingredient
+{
+
+}
+
+public class Cheddar : Cheese
 {
 	public override string Name => "Cheddar chees";
 	//public string Name => "Cheddar chees";
@@ -66,7 +73,7 @@ public class TomatoSauce : Ingredient
 	public int TomatoesIn100Grams { get; }
 }
 
-public class Mozzarella : Ingredient
+public class Mozzarella : Cheese
 {
 	public override string Name => "Mozzarella";
 	public bool IsLight { get; }
