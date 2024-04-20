@@ -1,16 +1,16 @@
 ﻿var pizza = new Pizza();
-pizza.AddIngredient(new Cheddar());
-pizza.AddIngredient(new TomatoSauce());
-pizza.AddIngredient(new Mozzarella());
+pizza.AddIngredient(new Cheddar(1, 12));
+pizza.AddIngredient(new TomatoSauce(2));
+pizza.AddIngredient(new Mozzarella(3));
 
 Console.WriteLine(pizza.ToString());
 
-Cheddar cheddar = new();
+Cheddar cheddar = new(1, 12);
 Console.WriteLine(cheddar.PublicMethod());
 //Console.WriteLine(cheddar.ProtectedMethod());
 //Console.WriteLine(cheddar.PrivateMethod());
 
-Ingredient ingredient = new Cheddar();
+Ingredient ingredient = new Cheddar(1, 12);
 Console.WriteLine("Variable of type Ingredient");
 Console.WriteLine(ingredient.Name);
 
@@ -20,9 +20,9 @@ Console.WriteLine(cheddar.Name);
 Console.WriteLine();
 var ingredients = new List<Ingredient>()
 {
-	new Cheddar(),
-	new TomatoSauce(),
-	new Mozzarella()
+	new Cheddar(1, 12),
+	new TomatoSauce(2),
+	new Mozzarella(3)
 };
 foreach (var item in ingredients)
 {
@@ -32,6 +32,29 @@ foreach (var item in ingredients)
 Console.WriteLine();
 Console.WriteLine(cheddar);
 
+Ingredient randomIngredient = GenerateRandomIngredient();
+Console.WriteLine("Random ingredient is" + randomIngredient);
+
+Console.WriteLine("is object? " + (randomIngredient is object));
+Console.WriteLine("is ingredient? " + (randomIngredient is Ingredient));
+Console.WriteLine("is cheddar? " + (randomIngredient is Cheddar));
+Console.WriteLine("is tomato sauce? " + (randomIngredient is TomatoSauce));
+Console.WriteLine("is mozzarella? " + (randomIngredient is Mozzarella));
+
+if (randomIngredient is Cheddar cheddar1)
+{
+	Console.WriteLine("cheddar object: " + cheddar1);
+}
+
+Ingredient GenerateRandomIngredient()
+{
+	var random = new Random();
+	var number = random.Next(1, 4);
+	if (number == 1) return new Cheddar(2, 12);
+	if (number == 2) return new TomatoSauce(1);
+	else return new Mozzarella(2);
+}
+
 public class Pizza
 {
 	private readonly List<Ingredient> _ingredients = [];
@@ -39,8 +62,9 @@ public class Pizza
 	public override string ToString() => $"This is a pizza with {string.Join(", ", _ingredients)}.";
 }
 
-public class Ingredient()
+public abstract class Ingredient(int priceIfExtraTopping)
 {
+	public int PriceIfExtraTopping { get; } = priceIfExtraTopping;
 	public override string ToString() => Name;
 	public virtual string Name { get; } = "Some ingredient";
 	public string PublicMethod() => "This method is PUBLIC in the Ingredient class.";
@@ -48,15 +72,16 @@ public class Ingredient()
 	private string PrivateMethod() => "This method is PRIVATE in the Ingredient class.";
 }
 
-public class Cheese : Ingredient
+public class Cheese(int priceIfExtraTopping) : Ingredient(priceIfExtraTopping)
 {
-
 }
 
-public class Cheddar : Cheese
+public class Cheddar(int priceIfExtraTopping, int agedForMonths) : Cheese(priceIfExtraTopping)
 {
-	public override string Name => "Cheddar chees";
+	public override string Name =>
+		$"{base.Name}, more specifically, a Cheddar chees aged for {agedForMonths} months.";
 	//public string Name => "Cheddar chees";
+
 	public int AgedForMonths { get; }
 
 	public void UseMethodsFromBaseClass()
@@ -67,13 +92,13 @@ public class Cheddar : Cheese
 	}
 }
 
-public class TomatoSauce : Ingredient
+public class TomatoSauce(int priceIfExtraTopping) : Ingredient(priceIfExtraTopping)
 {
 	public override string Name => "TomatoSauce";
 	public int TomatoesIn100Grams { get; }
 }
 
-public class Mozzarella : Cheese
+public class Mozzarella(int priceIfExtraTopping) : Cheese(priceIfExtraTopping)
 {
 	public override string Name => "Mozzarella";
 	public bool IsLight { get; }
