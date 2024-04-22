@@ -1,4 +1,6 @@
-﻿var pizza = new Pizza();
+﻿using T099_OOP.Extensions;
+
+var pizza = new Pizza();
 pizza.AddIngredient(new Cheddar(1, 12));
 pizza.AddIngredient(new TomatoSauce(2));
 pizza.AddIngredient(new Mozzarella(3));
@@ -45,6 +47,16 @@ if (randomIngredient is Cheddar cheddar1)
 {
 	Console.WriteLine("cheddar object: " + cheddar1);
 }
+
+Console.WriteLine();
+Console.WriteLine("Extension methods:");
+var multilineText = @"aaaaa
+bbbbb
+cccc
+ddddd";
+Console.WriteLine("Count of lines is " + multilineText.CountLines());
+Console.WriteLine("Next after Spring is " + Season.Spring.Next());
+Console.WriteLine("Next after Winter is " + Season.Winter.Next());
 
 Ingredient GenerateRandomIngredient()
 {
@@ -102,4 +114,12 @@ public class Mozzarella(int priceIfExtraTopping) : Cheese(priceIfExtraTopping)
 {
 	public override string Name => "Mozzarella";
 	public bool IsLight { get; }
+}
+
+public enum Season
+{
+	Spring,
+	Summer,
+	Autumn,
+	Winter
 }
