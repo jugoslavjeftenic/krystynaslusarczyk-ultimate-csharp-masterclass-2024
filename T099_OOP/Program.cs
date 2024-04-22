@@ -58,6 +58,17 @@ Console.WriteLine("Count of lines is " + multilineText.CountLines());
 Console.WriteLine("Next after Spring is " + Season.Spring.Next());
 Console.WriteLine("Next after Winter is " + Season.Winter.Next());
 
+var bakeableDishes = new List<IBakeable>()
+{
+	new Pizza(),
+	new Panettone()
+};
+
+foreach (var bakeableDish in bakeableDishes)
+{
+	Console.WriteLine(bakeableDish.GetInstructions());
+}
+
 Ingredient GenerateRandomIngredient()
 {
 	var random = new Random();
@@ -67,10 +78,28 @@ Ingredient GenerateRandomIngredient()
 	else return new Mozzarella(2);
 }
 
-public class Pizza
+public abstract class Dessert
+{
+
+}
+
+public interface IBakeable
+{
+	string GetInstructions();
+}
+
+public class Panettone : Dessert, IBakeable
+{
+	public string GetInstructions() => "Bake at 180 degrees Celsius for 35 minutes.";
+}
+
+public class Pizza : IBakeable
 {
 	private readonly List<Ingredient> _ingredients = [];
 	public void AddIngredient(Ingredient ingredient) => _ingredients.Add(ingredient);
+
+	public string GetInstructions() => "Bake at 250 degrees Celsius for 10 minutes.";
+
 	public override string ToString() => $"This is a pizza with {string.Join(", ", _ingredients)}.";
 }
 
