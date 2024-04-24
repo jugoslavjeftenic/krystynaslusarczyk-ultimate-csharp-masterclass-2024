@@ -1,5 +1,10 @@
-﻿using T125_Assignment_CookiesCookbook.Models;
+﻿using T125_Assignment_CookiesCookbook;
+using T125_Assignment_CookiesCookbook.Extensions;
+using T125_Assignment_CookiesCookbook.Models;
 using T125_Assignment_CookiesCookbook.Repositories;
+
+const string FileName = "recipes";
+const FileFormat FileFormat = FileFormat.Txt;
 
 List<IngredientModel> ingredients = IngredientsRepository.PopulateIngredients();
 List<IngredientModel> ingredientsForRecipe = [];
@@ -13,7 +18,8 @@ while (true)
 	if (int.TryParse(Console.ReadLine(), out var ingredientId))
 	{
 		// Check if ingredient choice is Ok and add to recipe
-		IngredientModel? addIngredientToRecipe = IngredientsRepository.FindIngredient(ingredientId, ingredients);
+		IngredientModel? addIngredientToRecipe =
+			IngredientsRepository.FindIngredient(ingredientId, ingredients);
 		if (addIngredientToRecipe is not null)
 		{
 			ingredientsForRecipe.Add(addIngredientToRecipe);
@@ -22,14 +28,20 @@ while (true)
 	}
 	else if (ingredientsForRecipe.Count.Equals(0))
 	{
-		// Exit app without recipe
+		// Exit app if no ingredient i recipe
 		Console.WriteLine("No ingredients have been selected. Recipe will not be saved.");
 		break;
 	}
 	else
 	{
-		// make recipe and save to file and other stuff before ending app
-		Console.WriteLine("(TODO) Make recipe.");
+		// Print newly created recipe to console
+		Console.WriteLine("Recipe added:");
+		ingredientsForRecipe.PrintIngredients();
+
+		// Save recipes to file
+		ingredientsForRecipe.SaveRecipes(FileName, FileFormat);
+
+
 		break;
 	}
 }
