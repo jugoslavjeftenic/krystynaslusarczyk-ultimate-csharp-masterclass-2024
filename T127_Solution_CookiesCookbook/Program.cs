@@ -6,4 +6,4 @@ var cookiesRecipesApp = new CookiesRecipesApp
 		new RecipesConsoleUserInteraction()
 	);
 
-cookiesRecipesApp.Run();
+cookiesRecipesApp.Run("recipes.txt");
