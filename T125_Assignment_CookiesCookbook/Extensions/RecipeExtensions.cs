@@ -1,53 +1,122 @@
 ﻿using System.Text.Json;
 using T125_Assignment_CookiesCookbook.Models;
+using T125_Assignment_CookiesCookbook.Repositories;
 
 namespace T125_Assignment_CookiesCookbook.Extensions
 {
 	public static class RecipeExtensions
 	{
-		public static void PrintIngredients(this List<IngredientModel> ingredients)
+		public static List<RecipeModel> ReadExistingRecipes(
+			this List<RecipeModel> recipes,
+			string fileName,
+			string fileExtension,
+			List<IngredientModel> ingredientsRepository
+			)
 		{
-			foreach (var ingredient in ingredients)
+			string stringToDeserialize = ReadFile(fileName, fileExtension);
+
+			if (string.IsNullOrWhiteSpace(stringToDeserialize) is false &&
+				fileExtension.Equals("json", StringComparison.CurrentCultureIgnoreCase))
 			{
-				Console.WriteLine($"{ingredient.Name}. {ingredient.PreparationInstructions}");
+				recipes.AddRange(JsonSerializer.Deserialize<List<RecipeModel>>(stringToDeserialize)!);
+			}
+
+			if (string.IsNullOrWhiteSpace(stringToDeserialize) is false &&
+				fileExtension.Equals("txt", StringComparison.CurrentCultureIgnoreCase))
+			{
+				string[] arrayOfRecipes = stringToDeserialize.Split(Environment.NewLine);
+
+				foreach (var singleRecipe in arrayOfRecipes)
+				{
+					if (singleRecipe.Equals(string.Empty))
+					{
+						continue;
+					}
+
+					string[] arrayOfStringIngredients = singleRecipe.Split(", ");
+					int[] arrayOfIntIngredients = new int[arrayOfStringIngredients.Length];
+					List<IngredientModel> ingredients = [];
+
+					for (int i = 0; i < arrayOfStringIngredients.Length; i++)
+					{
+						if (int.TryParse(arrayOfStringIngredients[i], out arrayOfIntIngredients[i]))
+						{
+							ingredients.Add(IngredientsRepository.FindIngredient
+								(arrayOfIntIngredients[i], ingredientsRepository)!);
+						}
+					}
+
+					if (ingredients.Count > 0)
+					{
+						recipes.Add(new RecipeModel(ingredients));
+					}
+				}
+			}
+
+			return recipes;
+		}
+
+		public static void PrintExistingRecipes(this List<RecipeModel> recipes)
+		{
+			int counter = 0;
+			Console.WriteLine("Existing recipes are:");
+			Console.WriteLine();
+
+			foreach (var recipe in recipes)
+			{
+				Console.WriteLine($"***** {++counter} *****");
+				Console.WriteLine(recipe.ToString());
+			}
+		}
+
+		public static void PrintLastRecipeIngredients(this List<RecipeModel> recipes)
+		{
+			if (recipes.Count > 0)
+			{
+				Console.WriteLine(recipes[^1].ToString());
 			}
 		}
 
 		public static void SaveRecipes
-			(this List<IngredientModel> ingredients, string fileName, FileFormat fileFormat)
+			(this List<RecipeModel> recipes, string fileName, string fileExtension)
 		{
-			string fileExtension;
-			string lineToWrite;
+			string stringToSerialize = string.Empty;
 
-			if (fileFormat == FileFormat.Json)
+			if (fileExtension.Equals("json", StringComparison.CurrentCultureIgnoreCase))
 			{
-				fileExtension = "json";
-
-				RecipeModel newRecipe = new(ingredients);
-				lineToWrite = JsonSerializer.Serialize(newRecipe);
+				stringToSerialize = JsonSerializer.Serialize(recipes);
 			}
 			else
 			{
-				fileExtension = "txt";
-				lineToWrite = string.Empty;
-				foreach (var ingredient in ingredients)
+				foreach (var recipe in recipes)
 				{
-					lineToWrite += $"{ingredient.ID}, ";
+					string recipeToString = string.Empty;
+
+					foreach (var ingredient in recipe.Ingredients)
+					{
+						recipeToString += $"{ingredient.ID}, ";
+					}
+
+					recipeToString = recipeToString[..(recipeToString.Length - 2)] +
+						Environment.NewLine;
+
+					stringToSerialize += recipeToString;
 				}
-				lineToWrite = lineToWrite[..(lineToWrite.Length - 2)] + Environment.NewLine;
 			}
 
-			using StreamWriter writeText = new($"{fileName}.{fileExtension}", true);
-			writeText.Write(lineToWrite);
+			using StreamWriter writeText = new($"{fileName}.{fileExtension}");
+			writeText.Write(stringToSerialize);
 		}
 
-		public static void ReadRecipes
-			(this List<IngredientModel> ingredients, string fileName, FileFormat fileFormat)
+		private static string ReadFile(string fileName, string fileExtension)
 		{
-			//using (StreamReader readText = new StreamReader("readme.txt"))
-			//{
-			//	string readText = readText.ReadLine();
-			//}
+			if (File.Exists($"{fileName}.{fileExtension}"))
+			{
+				using StreamReader streamReader = new($"{fileName}.{fileExtension}");
+				return streamReader.ReadToEnd();
+			}
+
+			return string.Empty;
 		}
 	}
 }

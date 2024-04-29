@@ -3,14 +3,20 @@ using T125_Assignment_CookiesCookbook.Extensions;
 using T125_Assignment_CookiesCookbook.Models;
 using T125_Assignment_CookiesCookbook.Repositories;
 
+// File format setup
 const string FileName = "recipes";
-const FileFormat FileFormat = FileFormat.Txt;
+const FileExtension FileExtension = FileExtension.Txt;
 
-List<IngredientModel> ingredients = IngredientsRepository.PopulateIngredients();
-List<IngredientModel> ingredientsForRecipe = [];
+List<RecipeModel> recipes = [];
+List<IngredientModel> ingredientsRepository = IngredientsRepository.PopulateIngredients();
+List<IngredientModel> newRecipeIngredients = [];
+
+// Print existing recipes
+recipes.ReadExistingRecipes(FileName, FileExtension.ToString(), ingredientsRepository);
+recipes.PrintExistingRecipes();
 
 Console.WriteLine("Create a new cookie recipe! Available ingredients are:");
-IngredientsRepository.PrintIngredientsToConsoleMenu(ingredients);
+IngredientsRepository.PrintIngredientsFromRepository(ingredientsRepository);
 
 while (true)
 {
@@ -18,30 +24,27 @@ while (true)
 	if (int.TryParse(Console.ReadLine(), out var ingredientId))
 	{
 		// Check if ingredient choice is Ok and add to recipe
-		IngredientModel? addIngredientToRecipe =
-			IngredientsRepository.FindIngredient(ingredientId, ingredients);
-		if (addIngredientToRecipe is not null)
+		IngredientModel? ingredientToAdd =
+			IngredientsRepository.FindIngredient(ingredientId, ingredientsRepository);
+		if (ingredientToAdd is not null)
 		{
-			ingredientsForRecipe.Add(addIngredientToRecipe);
+			newRecipeIngredients.Add(ingredientToAdd);
 		}
 		// else continue loop
 	}
-	else if (ingredientsForRecipe.Count.Equals(0))
+	else if (newRecipeIngredients.Count.Equals(0))
 	{
-		// Exit app if no ingredient i recipe
+		// Exit app if no ingredient in recipe
 		Console.WriteLine("No ingredients have been selected. Recipe will not be saved.");
 		break;
 	}
 	else
 	{
-		// Print newly created recipe to console
+		// Print newly created recipe to console and save recipes to file
 		Console.WriteLine("Recipe added:");
-		ingredientsForRecipe.PrintIngredients();
-
-		// Save recipes to file
-		ingredientsForRecipe.SaveRecipes(FileName, FileFormat);
-
-
+		recipes.Add(new RecipeModel(newRecipeIngredients));
+		recipes.PrintLastRecipeIngredients();
+		recipes.SaveRecipes(FileName, FileExtension.ToString());
 		break;
 	}
 }

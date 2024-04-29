@@ -57,7 +57,7 @@ namespace T125_Assignment_CookiesCookbook.Repositories
 			];
 		}
 
-		public static void PrintIngredientsToConsoleMenu(List<IngredientModel> ingredients)
+		public static void PrintIngredientsFromRepository(List<IngredientModel> ingredients)
 		{
 			foreach (var ingredient in ingredients)
 			{

@@ -2,6 +2,19 @@
 {
 	public class RecipeModel(List<IngredientModel> ingredients)
 	{
-		public List<int> Ingredients { get; set; } = ingredients.Select(ingredient => ingredient.ID).ToList();
+		public List<IngredientModel> Ingredients { get; set; } = ingredients;
+
+		public override string ToString()
+		{
+			string returnString = string.Empty;
+
+			foreach (var ingredient in Ingredients)
+			{
+				returnString += $"{ingredient.Name}. {ingredient.PreparationInstructions}" +
+					Environment.NewLine;
+			}
+
+			return returnString;
+		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿namespace T125_Assignment_CookiesCookbook
 {
-	public enum FileFormat
+	public enum FileExtension
 	{
 		Json,
 		Txt
