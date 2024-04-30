@@ -3,9 +3,9 @@ using T127_Solution_CookiesCookbook.Recipes.Ingredients;
 
 namespace T127_Solution_CookiesCookbook
 {
-	public class RecipesConsoleUserInteraction(IngredientsRegister ingredientsRegister) : IRecipesUserInteraction
+	public class RecipesConsoleUserInteraction(IIngredientsRegister ingredientsRegister) : IRecipesUserInteraction
 	{
-		private readonly IngredientsRegister _ingredientsRegister = ingredientsRegister;
+		private readonly IIngredientsRegister _ingredientsRegister = ingredientsRegister;
 
 		public void ShowMessage(string message)
 		{

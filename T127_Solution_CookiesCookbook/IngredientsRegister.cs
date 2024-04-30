@@ -2,7 +2,7 @@
 
 namespace T127_Solution_CookiesCookbook
 {
-	public class IngredientsRegister
+	public class IngredientsRegister : IIngredientsRegister
 	{
 		public IEnumerable<Ingredient> All { get; } =
 		[
