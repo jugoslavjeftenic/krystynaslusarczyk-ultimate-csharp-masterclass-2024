@@ -6,6 +6,7 @@ namespace T127_Solution_CookiesCookbook
 	{
 		void ShowMessage(string message);
 		void PrintExistingRecipes(IEnumerable<Recipe> allRecipes);
+		void PromptToCreateRecipe();
 		void Exit();
 	}
 }

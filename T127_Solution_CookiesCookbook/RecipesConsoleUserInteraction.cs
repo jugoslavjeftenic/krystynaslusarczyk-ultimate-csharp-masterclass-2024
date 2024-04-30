@@ -2,8 +2,10 @@
 
 namespace T127_Solution_CookiesCookbook
 {
-	public class RecipesConsoleUserInteraction : IRecipesUserInteraction
+	public class RecipesConsoleUserInteraction(IngredientsRegister ingredientsRegister) : IRecipesUserInteraction
 	{
+		private readonly IngredientsRegister _ingredientsRegister = ingredientsRegister;
+
 		public void ShowMessage(string message)
 		{
 			Console.WriteLine(message);
@@ -23,6 +25,16 @@ namespace T127_Solution_CookiesCookbook
 					Console.WriteLine();
 					counter++;
 				}
+			}
+		}
+
+		public void PromptToCreateRecipe()
+		{
+			Console.WriteLine("Create a new cookie recipe! Available ingredients are:");
+
+			foreach (var ingredient in _ingredientsRegister.All)
+			{
+				Console.WriteLine(ingredient);
 			}
 		}
 
