@@ -1,4 +1,5 @@
 ﻿using T127_Solution_CookiesCookbook.Recipes;
+using T127_Solution_CookiesCookbook.Recipes.Ingredients;
 
 namespace T127_Solution_CookiesCookbook
 {
@@ -7,6 +8,7 @@ namespace T127_Solution_CookiesCookbook
 		void ShowMessage(string message);
 		void PrintExistingRecipes(IEnumerable<Recipe> allRecipes);
 		void PromptToCreateRecipe();
+		IEnumerable<Ingredient> ReadIngredientsFromUser();
 		void Exit();
 	}
 }

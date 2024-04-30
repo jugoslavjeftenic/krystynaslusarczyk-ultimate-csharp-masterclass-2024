@@ -1,4 +1,6 @@
-﻿namespace T127_Solution_CookiesCookbook
+﻿using T127_Solution_CookiesCookbook.Recipes;
+
+namespace T127_Solution_CookiesCookbook
 {
 	public class CookiesRecipesApp
 		(IRecipesRepository recipesRepository, IRecipesUserInteraction recipesUserInteraction)
@@ -13,22 +15,22 @@
 
 			_recipesUserInteraction.PromptToCreateRecipe();
 
-			//var ingredients = _recipesUserInteraction.ReadIngredientsFromUser();
+			var ingredients = _recipesUserInteraction.ReadIngredientsFromUser();
 
-			//if (ingredients.Count > 0)
-			//{
-			//	var recipe = new Recipe(ingredients);
-			//	allRecipes.Add(recipe);
-			//	_recipesRepository.Write(filePath, allRecipes);
+			if (ingredients.Any())
+			{
+				var recipe = new Recipe(ingredients);
+				allRecipes.Add(recipe);
+				//_recipesRepository.Write(filePath, allRecipes);
 
-			//	_recipesUserInteraction.ShowMessage("Recipe added:");
-			//	_recipesUserInteraction.ShowMessage(recipe.ToString());
-			//}
-			//else
-			//{
-			//	_recipesUserInteraction
-			//		.ShowMessage("No ingredients have been selected. Recipe will not be saved.");
-			//}
+				_recipesUserInteraction.ShowMessage("Recipe added:");
+				_recipesUserInteraction.ShowMessage(recipe.ToString());
+			}
+			else
+			{
+				_recipesUserInteraction
+					.ShowMessage("No ingredients have been selected. Recipe will not be saved.");
+			}
 
 			_recipesUserInteraction.Exit();
 		}
