@@ -9,7 +9,7 @@
 			if (File.Exists(filePath))
 			{
 				var fileContents = File.ReadAllText(filePath);
-				return fileContents.Split(_separator).ToList();
+				return [.. fileContents.Split(_separator)];
 			}
 
 			return [];
