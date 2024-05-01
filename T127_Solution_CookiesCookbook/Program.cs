@@ -1,5 +1,8 @@
-﻿using T127_Solution_CookiesCookbook;
-using T127_Solution_CookiesCookbook.Repositories;
+﻿using T127_Solution_CookiesCookbook.App;
+using T127_Solution_CookiesCookbook.DataAccess;
+using T127_Solution_CookiesCookbook.FileAccess;
+using T127_Solution_CookiesCookbook.Recipes;
+using T127_Solution_CookiesCookbook.Recipes.Ingredients;
 
 const FileFormat Format = FileFormat.Json;
 IStringsRepository stringsRepository =

@@ -1,8 +1,7 @@
-﻿namespace T127_Solution_CookiesCookbook.Recipes.Ingredients
+﻿namespace T127_Solution_CookiesCookbook.Recipes.Ingredients;
+
+public class Sugar : Ingredient
 {
-	public class Sugar : Ingredient
-	{
-		public override int Id => 5;
-		public override string Name => "Sugar";
-	}
+	public override int Id => 5;
+	public override string Name => "Sugar";
 }
