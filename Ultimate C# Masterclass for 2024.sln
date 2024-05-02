@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "T104_Practice_VirtualMethod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "T125_Assignment_CookiesCookbook", "T125_Assignment_CookiesCookbook\T125_Assignment_CookiesCookbook.csproj", "{A08F3859-410B-4FCC-98DF-9CB2E2C06958}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T127_Solution_CookiesCookbook", "T127_Solution_CookiesCookbook\T127_Solution_CookiesCookbook.csproj", "{D467B1D0-E902-40EA-9167-BC8F021506E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "T127_Solution_CookiesCookbook", "T127_Solution_CookiesCookbook\T127_Solution_CookiesCookbook.csproj", "{D467B1D0-E902-40EA-9167-BC8F021506E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T137_ExceptionAndErrorHandling", "T137_ExceptionAndErrorHandling\T137_ExceptionAndErrorHandling.csproj", "{8558CD2A-D35F-42D5-92ED-1527A17123BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{D467B1D0-E902-40EA-9167-BC8F021506E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D467B1D0-E902-40EA-9167-BC8F021506E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D467B1D0-E902-40EA-9167-BC8F021506E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8558CD2A-D35F-42D5-92ED-1527A17123BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8558CD2A-D35F-42D5-92ED-1527A17123BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8558CD2A-D35F-42D5-92ED-1527A17123BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8558CD2A-D35F-42D5-92ED-1527A17123BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
