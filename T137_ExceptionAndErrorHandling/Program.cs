@@ -1,33 +1,54 @@
-﻿Console.WriteLine("Enter a number:");
-string input = Console.ReadLine() ?? "";
+﻿
+var invalidPersonObject = new Person("", -100);
 
-try
+var numbers = new int[] { 1, 2, 3 };
+var fourthNumber = numbers[3]; // IndexOutOfRangeException
+
+var emptyCollection = new List<int>();
+var firstElement = GetFirstElement(emptyCollection);
+var firstUsingLinq = emptyCollection.First(); // InvalidOperationException
+
+bool has7 = CheckIfContains(7, numbers);
+
+bool CheckIfContains(int value, int[] numbers)
 {
-	int number = ParseStringToInt(input);
-	var result = 10 / number;
-	Console.WriteLine($"10 / {number} is " + result);
-}
-catch (FormatException ex)
-{
-	Console.WriteLine($"Wrong format. Input string is not parsable to int. " +
-		$"Exception message: {ex.Message}");
-}
-catch (DivideByZeroException ex)
-{
-	Console.WriteLine($"Division by zero is an invalid operation. " +
-		$"Exception message: {ex.Message}");
-}
-catch (Exception ex)
-{
-	Console.WriteLine($"Unexpected error occurred. " +
-		$"Exception message: {ex.Message}");
-}
-finally
-{
-	Console.WriteLine("Finally block is being executed.");
+	throw new NotImplementedException();
 }
 
-static int ParseStringToInt(string input)
+static int GetFirstElement(IEnumerable<int> numbers)
 {
-	return int.Parse(input);
+	foreach (int number in numbers)
+	{
+		return number;
+	}
+
+	throw new InvalidOperationException("The collection cannot be empty.");
+}
+
+class Person
+{
+	public string Name { get; }
+
+	public int YearOfBirth { get; }
+
+	public Person(string name, int yearOfBirth)
+	{
+		//if (name is null)
+		//{
+		//	throw new ArgumentNullException("The name cannot be null.");
+		//}
+		ArgumentNullException.ThrowIfNull(name);
+		if (name.Equals(string.Empty))
+		{
+			throw new ArgumentException("The name cannot be empty.");
+		}
+		if (yearOfBirth < 1900 || yearOfBirth > DateTime.Now.Year)
+		{
+			throw new ArgumentOutOfRangeException
+				("The year of birth must be between 1900 and the current year.");
+		}
+
+		Name = name;
+		YearOfBirth = yearOfBirth;
+	}
 }
