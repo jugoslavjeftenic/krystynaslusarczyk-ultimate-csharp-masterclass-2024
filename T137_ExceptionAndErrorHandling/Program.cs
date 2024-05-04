@@ -1,4 +1,11 @@
-﻿IsFirstElementPositive(new int[] { 1, 2, 3 });
+﻿try
+{
+	var result = IsFirstElementPositive(null!);
+}
+catch (NullReferenceException)
+{
+
+}
 
 static int GetFirstElement(IEnumerable<int> numbers)
 {
@@ -20,10 +27,14 @@ static bool IsFirstElementPositive(IEnumerable<int> numbers)
 	}
 	catch (InvalidOperationException ex)
 	{
-		throw new InvalidOperationException("The collection is empty!", ex);
+		Console.WriteLine("The collection is empty!");
+		Console.WriteLine(ex);
+		return true;
 	}
 	catch (NullReferenceException ex)
 	{
+		//Console.WriteLine("Sorry, the application experienced an unexpected error.");
+		//throw;
 		throw new ArgumentNullException("The collection is null.", ex);
 	}
 }
