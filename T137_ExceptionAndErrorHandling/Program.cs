@@ -1,40 +1,42 @@
-﻿try
+﻿Console.WriteLine("Enter a number:");
+string input = Console.ReadLine()!;
+
+try
 {
-	var result = IsFirstElementPositive(null!);
+	int number = ParseStringToInt(input);
+	var result = 10 / number;
+	Console.WriteLine($"10 / {number} is " + result);
 }
-catch (NullReferenceException)
-{
-
-}
-
-static int GetFirstElement(IEnumerable<int> numbers)
-{
-	Console.WriteLine("Finally block is being executed.");
-	foreach (int number in numbers)
-	{
-		return number;
-	}
-
-	throw new InvalidOperationException("The collection cannot be empty.");
-}
-
-static bool IsFirstElementPositive(IEnumerable<int> numbers)
+catch (DivideByZeroException ex)
 {
 	try
 	{
-		var firstElement = GetFirstElement(numbers);
-		return firstElement > 0;
+		int.Parse("not an int");
 	}
-	catch (InvalidOperationException ex)
+	catch (FormatException)
 	{
-		Console.WriteLine("The collection is empty!");
-		Console.WriteLine(ex);
-		return true;
+		throw;
 	}
-	catch (NullReferenceException ex)
-	{
-		//Console.WriteLine("Sorry, the application experienced an unexpected error.");
-		//throw;
-		throw new ArgumentNullException("The collection is null.", ex);
-	}
+
+	Console.WriteLine($"Division by zero is an invalid operation. " +
+		$"Exception message: {ex.Message}");
+}
+catch (FormatException ex)
+{
+	Console.WriteLine($"Wrong format. Input string is not parsable to int. " +
+		$"Exception message: {ex.Message}");
+}
+catch (Exception ex)
+{
+	Console.WriteLine($"Unexpected error occurred. " +
+		$"Exception message: {ex.Message}");
+}
+finally
+{
+	Console.WriteLine("Finally block is being executed.");
+}
+
+static int ParseStringToInt(string input)
+{
+	return int.Parse(input);
 }
