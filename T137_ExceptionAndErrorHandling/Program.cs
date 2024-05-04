@@ -1,42 +1,30 @@
-﻿Console.WriteLine("Enter a number:");
-string input = Console.ReadLine()!;
-
+﻿
 try
 {
-	int number = ParseStringToInt(input);
-	var result = 10 / number;
-	Console.WriteLine($"10 / {number} is " + result);
+	var dataFromWeb = SendHttpRequest("www.someAddress.com/get/someResource");
 }
-catch (DivideByZeroException ex)
+catch (HttpRequestException ex) when (ex.Message == "403")
 {
-	try
-	{
-		int.Parse("not an int");
-	}
-	catch (FormatException)
-	{
-		throw;
-	}
-
-	Console.WriteLine($"Division by zero is an invalid operation. " +
-		$"Exception message: {ex.Message}");
+	Console.WriteLine("It was forbidden to access the resource.");
+	throw;
 }
-catch (FormatException ex)
+catch (HttpRequestException ex) when (ex.Message == "404")
 {
-	Console.WriteLine($"Wrong format. Input string is not parsable to int. " +
-		$"Exception message: {ex.Message}");
+	Console.WriteLine("The resource was not found.");
+	throw;
 }
-catch (Exception ex)
+catch (HttpRequestException ex) when (ex.Message.StartsWith("4"))
 {
-	Console.WriteLine($"Unexpected error occurred. " +
-		$"Exception message: {ex.Message}");
+	Console.WriteLine("Some kind of client error.");
+	throw;
 }
-finally
+catch (HttpRequestException ex) when (ex.Message == "500")
 {
-	Console.WriteLine("Finally block is being executed.");
+	Console.WriteLine("The server has experienced an internal error.");
+	throw;
 }
 
-static int ParseStringToInt(string input)
+object SendHttpRequest(string v)
 {
-	return int.Parse(input);
+	throw new NotImplementedException();
 }
