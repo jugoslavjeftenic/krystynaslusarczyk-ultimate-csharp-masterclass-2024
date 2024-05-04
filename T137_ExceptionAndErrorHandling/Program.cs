@@ -1,30 +1,36 @@
-﻿
-try
-{
-	var dataFromWeb = SendHttpRequest("www.someAddress.com/get/someResource");
-}
-catch (HttpRequestException ex) when (ex.Message == "403")
-{
-	Console.WriteLine("It was forbidden to access the resource.");
-	throw;
-}
-catch (HttpRequestException ex) when (ex.Message == "404")
-{
-	Console.WriteLine("The resource was not found.");
-	throw;
-}
-catch (HttpRequestException ex) when (ex.Message.StartsWith("4"))
-{
-	Console.WriteLine("Some kind of client error.");
-	throw;
-}
-catch (HttpRequestException ex) when (ex.Message == "500")
-{
-	Console.WriteLine("The server has experienced an internal error.");
-	throw;
-}
+﻿throw new CustomException();
 
-object SendHttpRequest(string v)
+[Serializable]
+public class CustomException : Exception
 {
-	throw new NotImplementedException();
+	public int StatusCode { get; }
+
+	public CustomException()
+	{
+
+	}
+
+	public CustomException(string message, int statusCode) : base(message)
+	{
+		StatusCode = statusCode;
+	}
+
+	public CustomException(
+		string message,
+		int statusCode,
+		Exception innerException) : base(message, innerException)
+	{
+		StatusCode = statusCode;
+	}
+
+	public CustomException(string message) : base(message)
+	{
+
+	}
+
+	public CustomException(string message, Exception innerException)
+		: base(message, innerException)
+	{
+
+	}
 }
