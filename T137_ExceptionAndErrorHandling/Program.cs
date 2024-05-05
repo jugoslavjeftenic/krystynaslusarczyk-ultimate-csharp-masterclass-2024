@@ -1,138 +1,37 @@
-﻿using System.Runtime.Serialization;
+﻿var logger = new Logger();
 
 try
 {
-	ComplexMethod();
+	Run();
 }
-catch (ConnectionException)
+catch (Exception ex)
 {
-	Console.WriteLine("Check your internet connection.");
-	throw;
-}
-catch (JsonParsingException ex)
-{
-	Console.WriteLine("Unable to parse JSON. JSON body is: " + ex.JsonBody);
-	throw;
+	Console.WriteLine("Sorry. The application has experienced an error." +
+		$"The error message: {ex.Message}");
+	logger.Log(ex);
 }
 
-throw new CustomException();
-
-void ComplexMethod()
+void Run()
 {
-	// step 1: connecting
-	throw new ConnectionException("Cannot connect to a service.");
-
-	// step 2: authorizing
-	throw new AuthorizationException("Cannot authorize the user.");
-
-	// step 3: retrieving data as JSON
-	throw new DataAccessException("Cannot retrieve data.");
-
-	// step 4: parsing the JSON to some C# type
-	throw new JsonParsingException("Cannot parse JSON data.");
-}
-
-public class JsonParsingException : Exception
-{
-	public string? JsonBody { get; }
-
-	public JsonParsingException()
+	try
 	{
+		Console.WriteLine("Enter a word:");
+		var word = Console.ReadLine()!;
+		Console.WriteLine($"Count of characters is: {word.Length}");
 	}
-
-	public JsonParsingException(string? message) : base(message)
+	catch (NullReferenceException ex)
 	{
-	}
-
-	public JsonParsingException(string? message, string jsonBody) : base(message)
-	{
-		JsonBody = jsonBody;
-	}
-
-	public JsonParsingException(string? message, Exception? innerException) : base(message, innerException)
-	{
-	}
-
-	public JsonParsingException(string? message,
-		string jsonBody,
-		Exception? innerException) : base(message, innerException)
-	{
-		JsonBody = jsonBody;
+		Console.WriteLine("The input is null, and its length cannot be calculated.");
+		Console.WriteLine("Did you press CTRL+Z in the console?");
+		logger.Log(ex);
+		throw;
 	}
 }
 
-public class DataAccessException : Exception
+public class Logger
 {
-	public DataAccessException()
+	public void Log(Exception ex)
 	{
-	}
-
-	public DataAccessException(string? message) : base(message)
-	{
-	}
-
-	public DataAccessException(string? message, Exception? innerException) : base(message, innerException)
-	{
-	}
-}
-
-public class AuthorizationException : Exception
-{
-	public AuthorizationException()
-	{
-	}
-
-	public AuthorizationException(string? message) : base(message)
-	{
-	}
-
-	public AuthorizationException(string? message, Exception? innerException) : base(message, innerException)
-	{
-	}
-}
-
-public class ConnectionException : Exception
-{
-	public ConnectionException()
-	{
-	}
-
-	public ConnectionException(string? message) : base(message)
-	{
-	}
-
-	public ConnectionException(string? message, Exception? innerException) : base(message, innerException)
-	{
-	}
-}
-
-public class CustomException : Exception
-{
-	public int StatusCode { get; }
-
-	public CustomException()
-	{
-	}
-
-	public CustomException(string message, int statusCode) : base(message)
-	{
-		StatusCode = statusCode;
-	}
-
-	public CustomException(
-		string message,
-		int statusCode,
-		Exception innerException) : base(message, innerException)
-	{
-		StatusCode = statusCode;
-	}
-
-	public CustomException(string message) : base(message)
-	{
-	}
-
-	public CustomException(string message, Exception innerException)
-		: base(message, innerException)
-	{
+		throw new NotImplementedException();
 	}
 }
