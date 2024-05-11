@@ -1,36 +1,45 @@
-﻿namespace T157_Assignment_GameDataParser.App
+﻿namespace T157_Assignment_GameDataParser.App;
+
+public class ConsoleAppUserInteraction : IAppUserInteraction
 {
-	public class ConsoleAppUserInteraction : IAppUserInteraction
+	public string ReadAndValidateFilePathFromUser()
 	{
-		public string ReadFileNameFromUser()
+		string? filePath;
+
+		while (true)
 		{
-			string? filePath;
+			Console.WriteLine("Enter the name of the file you want to read:");
+			filePath = Console.ReadLine();
 
-			while (true)
+			if (filePath is null)
 			{
-				Console.WriteLine("Enter the name of the file you want to read:");
-				filePath = Console.ReadLine();
-
-				if (filePath is null)
-				{
-					Console.WriteLine("File name cannot be null.");
-					continue;
-				}
-
-				if (filePath == string.Empty)
-				{
-					Console.WriteLine("File name cannot be empty.");
-					continue;
-				}
-
-				if (File.Exists(filePath) is false)
-				{
-					Console.WriteLine("File not found.");
-					continue;
-				}
-
-				return filePath;
+				Console.WriteLine("File name cannot be null.");
+				continue;
 			}
+
+			if (filePath.Equals(string.Empty))
+			{
+				Console.WriteLine("File name cannot be empty.");
+				continue;
+			}
+
+			if (filePath.Equals("1"))
+			{
+				filePath = "games.json";
+			}
+
+			if (filePath.Equals("2"))
+			{
+				filePath = "gamesInvalidFormat.json";
+			}
+
+			if (File.Exists(filePath) is false)
+			{
+				Console.WriteLine("File not found.");
+				continue;
+			}
+
+			return filePath;
 		}
 	}
 }

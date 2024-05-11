@@ -1,7 +1,6 @@
-﻿namespace T157_Assignment_GameDataParser.App
+﻿namespace T157_Assignment_GameDataParser.App;
+
+public interface IAppUserInteraction
 {
-	public interface IAppUserInteraction
-	{
-		string ReadFileNameFromUser();
-	}
+	string ReadAndValidateFilePathFromUser();
 }

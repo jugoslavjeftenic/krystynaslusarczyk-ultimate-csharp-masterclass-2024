@@ -1,15 +1,22 @@
-﻿namespace T157_Assignment_GameDataParser.App;
+﻿using T157_Assignment_GameDataParser.Games;
 
-public class GameDataParserApp(IAppUserInteraction appUserInteraction)
+namespace T157_Assignment_GameDataParser.App;
+
+public class GameDataParserApp(IAppUserInteraction appUserInteraction, IGamesRepository gamesRepository)
 {
 	private readonly IAppUserInteraction _appUserInteraction = appUserInteraction;
+	private readonly IGamesRepository _gamesRepository = gamesRepository;
 
 	public void Run()
 	{
-		string fileName = _appUserInteraction.ReadFileNameFromUser();
+		string filePath = _appUserInteraction.ReadAndValidateFilePathFromUser();
+		List<GameModel> games = _gamesRepository.ReadGamesFromJson(filePath);
 
-        Console.WriteLine($"Test imena datoteke: {fileName}");
-    }
+		foreach (var game in games)
+		{
+			Console.WriteLine(game.Title);
+		}
+	}
 
 	public static void Exit()
 	{
