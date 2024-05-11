@@ -30,6 +30,11 @@ public class ConsoleAppUserInteraction : IAppUserInteraction
 
 			if (filePath.Equals("2"))
 			{
+				filePath = "gamesEmpty.json";
+			}
+
+			if (filePath.Equals("3"))
+			{
 				filePath = "gamesInvalidFormat.json";
 			}
 

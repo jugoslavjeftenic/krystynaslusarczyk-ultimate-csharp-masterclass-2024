@@ -11,11 +11,7 @@ public class GameDataParserApp(IAppUserInteraction appUserInteraction, IGamesRep
 	{
 		string filePath = _appUserInteraction.ReadAndValidateFilePathFromUser();
 		List<GameModel> games = _gamesRepository.ReadGamesFromJson(filePath);
-
-		foreach (var game in games)
-		{
-			Console.WriteLine(game.Title);
-		}
+		games.PrintToConsole();
 	}
 
 	public static void Exit()
