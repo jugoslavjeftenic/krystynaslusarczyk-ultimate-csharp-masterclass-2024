@@ -6,12 +6,26 @@ public class GamesRepository : IGamesRepository
 {
 	public List<GameModel> ReadGamesFromJson(string filePath)
 	{
-		if (File.Exists(filePath))
+		var fileContent = File.ReadAllText(filePath);
+
+		if (string.IsNullOrEmpty(fileContent))
 		{
-			var fileContent = File.ReadAllText(filePath);
-			return JsonSerializer.Deserialize<List<GameModel>>(fileContent) ?? [];
+			return [];
 		}
 
-		return [];
+		try
+		{
+			return JsonSerializer.Deserialize<List<GameModel>>(fileContent) ?? [];
+		}
+		catch (JsonException)
+		{
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.WriteLine($"JSON in the {filePath} was not in a valid format. JSON body:");
+
+			Console.ForegroundColor = ConsoleColor.White;
+			Console.WriteLine(fileContent);
+
+			throw;
+		}
 	}
 }

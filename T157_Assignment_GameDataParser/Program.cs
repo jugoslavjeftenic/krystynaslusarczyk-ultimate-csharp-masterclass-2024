@@ -7,6 +7,16 @@ var gameDataParserApp = new GameDataParserApp
 		new GamesRepository()
 	);
 
-gameDataParserApp.Run();
+try
+{
+	gameDataParserApp.Run();
+}
+catch (Exception)
+{
+	Console.WriteLine(
+		"Sorry! The application has experienced an unexpected error and will have to be closed.");
+
+	throw;
+}
 
 GameDataParserApp.Exit();
