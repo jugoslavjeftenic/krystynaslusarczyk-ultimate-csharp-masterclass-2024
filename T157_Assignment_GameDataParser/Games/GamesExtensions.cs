@@ -4,7 +4,7 @@ public static class GamesExtensions
 {
 	public static void PrintToConsole(this List<GameModel> games)
 	{
-		if (games.Count>0)
+		if (games.Count > 0)
 		{
 			Console.WriteLine("Loaded games are:");
 
