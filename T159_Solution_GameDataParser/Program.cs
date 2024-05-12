@@ -1,22 +1,44 @@
 ﻿using System.Text.Json;
 
-Console.WriteLine("Enter the name of the file you want to read:");
-var fileName = Console.ReadLine()!;
+string fileContents = string.Empty;
+bool isFileRead = false;
 
-if (fileName.Equals("1"))
+do
 {
-	fileName = "games.json";
-}
-if (fileName.Equals("2"))
-{
-	fileName = "gamesEmpty.json";
-}
-if (fileName.Equals("3"))
-{
-	fileName = "gamesInvalidFormat.json";
-}
+	try
+	{
+		Console.WriteLine("Enter the name of the file you want to read:");
+		var fileName = Console.ReadLine() ?? string.Empty;
 
-var fileContents = File.ReadAllText(fileName);
+		if (fileName.Equals("1"))
+		{
+			fileName = "games.json";
+		}
+		if (fileName.Equals("2"))
+		{
+			fileName = "gamesEmpty.json";
+		}
+		if (fileName.Equals("3"))
+		{
+			fileName = "gamesInvalidFormat.json";
+		}
+
+		fileContents = File.ReadAllText(fileName);
+		isFileRead = true;
+	}
+	catch (ArgumentNullException)
+	{
+		Console.WriteLine("File name cannot be null.");
+	}
+	catch (ArgumentException)
+	{
+		Console.WriteLine("File name cannot be empty.");
+	}
+	catch (FileNotFoundException)
+	{
+		Console.WriteLine("File not found.");
+	}
+} while (isFileRead is false);
 
 var videoGames = JsonSerializer.Deserialize<List<VideoGame>>(fileContents);
 
