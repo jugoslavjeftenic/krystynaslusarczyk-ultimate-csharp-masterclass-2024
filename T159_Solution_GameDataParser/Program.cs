@@ -20,43 +20,43 @@ public class GameDataParserApp
 {
 	public void Run()
 	{
-		string fileName = string.Empty;
+		string fileName;
 		string fileContents = string.Empty;
 		bool isFileRead = false;
 		do
 		{
-			try
+			Console.WriteLine("Enter the name of the file you want to read:");
+			fileName = Console.ReadLine() ?? string.Empty;
+
+			if (fileName.Equals("1"))
 			{
-				Console.WriteLine("Enter the name of the file you want to read:");
-				fileName = Console.ReadLine() ?? string.Empty;
-
-				if (fileName.Equals("1"))
-				{
-					fileName = "games.json";
-				}
-				if (fileName.Equals("2"))
-				{
-					fileName = "gamesEmpty.json";
-				}
-				if (fileName.Equals("3"))
-				{
-					fileName = "gamesInvalidFormat.json";
-				}
-
-				fileContents = File.ReadAllText(fileName);
-				isFileRead = true;
+				fileName = "games.json";
 			}
-			catch (ArgumentNullException)
+			if (fileName.Equals("2"))
+			{
+				fileName = "gamesEmpty.json";
+			}
+			if (fileName.Equals("3"))
+			{
+				fileName = "gamesInvalidFormat.json";
+			}
+
+			if (fileName is null)
 			{
 				Console.WriteLine("File name cannot be null.");
 			}
-			catch (ArgumentException)
+			else if (fileName.Equals(string.Empty))
 			{
 				Console.WriteLine("File name cannot be empty.");
 			}
-			catch (FileNotFoundException)
+			else if (File.Exists(fileName) is false)
 			{
 				Console.WriteLine("File not found.");
+			}
+			else
+			{
+				fileContents = File.ReadAllText(fileName);
+				isFileRead = true;
 			}
 		} while (isFileRead is false);
 
