@@ -1,4 +1,5 @@
-﻿
+﻿namespace T159_Solution_GameDataParser.Logging;
+
 public class Logger(string logFileName)
 {
 	private readonly string _logFileName = logFileName;
