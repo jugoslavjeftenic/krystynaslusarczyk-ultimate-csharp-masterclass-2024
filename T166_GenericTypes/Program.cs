@@ -1,63 +1,49 @@
-﻿var numbers = new SimpleList<int>();
-numbers.Add(10);
-numbers.Add(20);
-numbers.Add(30);
-numbers.Add(40);
-numbers.Add(50);
-numbers.RemoveAt(2);
+﻿
 
-var words = new SimpleList<string>();
-words.Add("aaa");
-words.Add("bbb");
-words.Add("ccc");
+var numbers = new List<int> { 5, 3, 2, 8, 16, 7 };
+Tuple<int, int> minAndMax = GetMinAndMax(numbers);
 
-class SimpleList<T>
+var twoStrings = new Tuple<string, string>("aaa", "bbb");
+var differentTypes = new Tuple<string, int>("aaa", 1);
+var threeTypes = new Tuple<string, int, bool>("aaa", 1, false);
+
+Console.WriteLine("Smallest number is " + minAndMax.Item1);
+Console.WriteLine("Largest number is " + minAndMax.Item2);
+
+Tuple<int, int> GetMinAndMax(IEnumerable<int> input)
 {
-	private T?[] _items = new T[4];
-	private int _size = 0;
-
-	public void Add(T item)
+	if (input.Any() is false)
 	{
-		if (_size >= _items.Length)
-		{
-			var newItems = new T?[_items.Length * 2];
-
-			for (int i = 0; i < _items.Length; i++)
-			{
-				newItems[i] = _items[i];
-			}
-
-			_items = newItems;
-		}
-
-		_items[_size] = item;
-		++_size;
+		throw new InvalidOperationException("The input collection cannot be empty.");
 	}
 
-	public void RemoveAt(int index)
+	int min = input.First();
+	int max = input.First();
+
+	foreach (var number in input)
 	{
-		if (index < 0 || index >= _size)
+		if (number > max)
 		{
-			throw new IndexOutOfRangeException($"Index {index} is outside the bund of the list.");
+			max = number;
 		}
-
-		--_size;
-
-		for (int i = index; i < _size; ++i)
+		if (number < min)
 		{
-			_items[i] = _items[i + 1];
+			min = number;
 		}
-
-		_items[_size] = default;
 	}
 
-	public T? GetAtIndex(int index)
-	{
-		if (index < 0 || index >= _size)
-		{
-			throw new IndexOutOfRangeException($"Index {index} is outside the bund of the list.");
-		}
-
-		return _items[index];
-	}
+	return new Tuple<int, int>(min, max);
 }
+
+//public class SimpleTuple<T1, T2>(T1 item1, T2 item2)
+//{
+//	public T1 Item1 { get; } = item1;
+//	public T2 Item2 { get; } = item2;
+//}
+
+//public class SimpleTuple<T1, T2, T3>(T1 item1, T2 item2, T3 item3)
+//{
+//	public T1 Item1 { get; } = item1;
+//	public T2 Item2 { get; } = item2;
+//	public T3 Item3 { get; } = item3;
+//}
