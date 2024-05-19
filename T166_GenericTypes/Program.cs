@@ -1,34 +1,47 @@
-﻿using System.Diagnostics;
-
-//var points = CreateCollectionOfRandomLength<Point>(100);
-//var ints = CreateCollectionOfRandomLength<int>(100);
-
-Stopwatch stopwatch = Stopwatch.StartNew();
-
-var dates = CreateCollectionOfRandomLength<DateTime>(100);
-
-stopwatch.Stop();
-Console.WriteLine($"Execution took {stopwatch.ElapsedMilliseconds} ms.");
-// Result before optimization: ~1700ms.
-// Result after optimization: ~1020ms.
-
-IEnumerable<T> CreateCollectionOfRandomLength<T>(int maxLength) where T : new()
+﻿var people = new List<Person>
 {
-	var length = 100000000; // new Random().Next(maxLength + 1);
+	new() { Name="John", YearOfBirth=1980 },
+	new() { Name="Anna", YearOfBirth=1815 },
+	new() { Name="Bill", YearOfBirth=2150 }
+};
 
-	//var result = new List<T>();
-	var result = new List<T>(length);
+var employees = new List<Employee>
+{
+	new() { Name="John", YearOfBirth=1980 },
+	new() { Name="Anna", YearOfBirth=1815 },
+	new() { Name="Bill", YearOfBirth=2150 }
+};
 
-	for (int i = 0; i < length; i++)
+var validPeople = GetOnlyValid(people);
+var validEmployees = GetOnlyValid(employees);
+
+foreach (var employee in employees)
+{
+	employee.GoToWork();
+}
+
+IEnumerable<TPerson> GetOnlyValid<TPerson>(IEnumerable<TPerson> persons) where TPerson : Person
+{
+	var result = new List<TPerson>();
+
+	foreach (var person in persons)
 	{
-		result.Add(new T());
+		if (person.YearOfBirth > 1900 && person.YearOfBirth < DateTime.Now.Year)
+		{
+			result.Add(person);
+		}
 	}
 
 	return result;
 }
 
-public class Point(int x, int y)
+public class Person
 {
-	public int X { get; } = x;
-	public int Y { get; } = y;
+	public string? Name { get; init; }
+	public int YearOfBirth { get; init; }
+}
+
+public class Employee : Person
+{
+	public void GoToWork() => Console.WriteLine("Going to work");
 }
