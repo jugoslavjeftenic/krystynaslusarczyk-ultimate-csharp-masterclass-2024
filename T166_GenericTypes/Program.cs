@@ -1,31 +1,23 @@
-﻿// GenericUriParser methods
-var ints = new List<int> { 1, 2, 3 };
-ints.AddToFront(10);
+﻿//var points = CreateCollectionOfRandomLength<Point>(100);
+var ints = CreateCollectionOfRandomLength<int>(100);
+var dates = CreateCollectionOfRandomLength<DateTime>(100);
 
-// Generic methods with multiple type of parameters
-var decimals = new List<decimal> { 1.1m, 0.5m, 22.5m, 12m };
-var intsFromDecimals = decimals.ConvertTo<decimal, int>();
-
-var floats = new List<float> { 1.4f, -100.01f };
-var longsFromFloats = floats.ConvertTo<float, long>();
-
-static class ListExtensions
+IEnumerable<T> CreateCollectionOfRandomLength<T>(int maxLength) where T : new()
 {
-	public static void AddToFront<T>(this List<T> list, T item)
+	var length = new Random().Next(maxLength + 1);
+
+	var result = new List<T>();
+
+	for (int i = 0; i < length; i++)
 	{
-		list.Insert(0, item);
+		result.Add(new T());
 	}
 
-	public static List<TTarget?> ConvertTo<TSource, TTarget>(this List<TSource> input)
-	{
-		var result = new List<TTarget?>();
+	return result;
+}
 
-		foreach (var item in input)
-		{
-			TTarget? itemAfterCasting = (TTarget?)Convert.ChangeType(item, typeof(TTarget));
-			result.Add(itemAfterCasting);
-		}
-
-		return result;
-	}
+public class Point(int x, int y)
+{
+	public int X { get; } = x;
+	public int Y { get; } = y;
 }
