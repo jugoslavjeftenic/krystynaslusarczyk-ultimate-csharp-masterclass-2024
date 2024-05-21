@@ -1,42 +1,13 @@
-﻿var john = new Person { Name = "John", YearOfBirth = 1980 };
-var anna = new Person { Name = "Anna", YearOfBirth = 1915 };
+﻿using System.Numerics;
 
-PrintInOrder(10, 5);
-PrintInOrder("aaa", "bbb");
-PrintInOrder(anna, john);
+Console.WriteLine("Square of 2 is: " + Calculator.Square(2));
+Console.WriteLine("Square of 4m is: " + Calculator.Square(4m));
+Console.WriteLine("Square of 6d is: " + Calculator.Square(6d));
 
-void PrintInOrder<T>(T first, T second) where T : IComparable<T>
+public static class Calculator
 {
-	if (first.CompareTo(second) > 0)
+	public static T Square<T>(T input) where T : INumber<T>
 	{
-		Console.WriteLine($"{second} {first}");
-	}
-	else
-	{
-		Console.WriteLine($"{first} {second}");
-	}
-}
-
-public class Person : IComparable<Person>
-{
-	public string? Name { get; init; }
-	public int YearOfBirth { get; init; }
-
-	public int CompareTo(Person? other)
-	{
-		if (YearOfBirth < other?.YearOfBirth)
-		{
-			return 1;
-		}
-		else if (YearOfBirth > other?.YearOfBirth)
-		{
-			return -1;
-		}
-		return 0;
-	}
-
-	public override string ToString()
-	{
-		return $"{YearOfBirth}, {Name}";
+		return input * input;
 	}
 }
