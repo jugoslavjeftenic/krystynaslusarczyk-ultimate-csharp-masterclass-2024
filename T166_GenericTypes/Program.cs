@@ -1,25 +1,19 @@
-﻿var numbers = new List<int> { 5, 1, 7, 2 };
-numbers.Sort();
-PrintListToConsole(numbers);
+﻿var john = new Person { Name = "John", YearOfBirth = 1980 };
+var anna = new Person { Name = "Anna", YearOfBirth = 1915 };
 
-var words = new List<string> { "ddd", "aaa", "ccc", "bbb" };
-words.Sort();
-PrintListToConsole(words);
+PrintInOrder(10, 5);
+PrintInOrder("aaa", "bbb");
+PrintInOrder(anna, john);
 
-var people = new List<Person>
+void PrintInOrder<T>(T first, T second) where T : IComparable<T>
 {
-	new() { Name = "John", YearOfBirth = 1980 },
-	new() { Name = "Anna", YearOfBirth = 1915 },
-	new() { Name = "Bill", YearOfBirth = 2011 }
-};
-people.Sort();
-PrintListToConsole(people);
-
-static void PrintListToConsole<T>(List<T> list)
-{
-	foreach (var item in list)
+	if (first.CompareTo(second) > 0)
 	{
-		Console.WriteLine(item);
+		Console.WriteLine($"{second} {first}");
+	}
+	else
+	{
+		Console.WriteLine($"{first} {second}");
 	}
 }
 
