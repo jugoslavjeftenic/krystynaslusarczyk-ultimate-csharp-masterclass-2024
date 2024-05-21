@@ -1,13 +1,18 @@
-﻿using System.Numerics;
+﻿SomeMethod(new Pet(), new PetOwner());
 
-Console.WriteLine("Square of 2 is: " + Calculator.Square(2));
-Console.WriteLine("Square of 4m is: " + Calculator.Square(4m));
-Console.WriteLine("Square of 6d is: " + Calculator.Square(6d));
-
-public static class Calculator
+void SomeMethod<TPet, TOwner>(TPet pet, TOwner owner)
+	where TPet : Pet, IComparable<TPet>
+	where TOwner : new()
 {
-	public static T Square<T>(T input) where T : INumber<T>
+
+}
+
+public class Pet : IComparable<Pet>
+{
+	public int CompareTo(Pet? other)
 	{
-		return input * input;
+		throw new NotImplementedException();
 	}
 }
+
+public class PetOwner { }
