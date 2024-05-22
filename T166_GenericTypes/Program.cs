@@ -1,41 +1,29 @@
-﻿var numbers = new[] { 1, 4, 7, 19, 2 };
+﻿ProcessString processString1 = TrimTo5Letters;
+ProcessString processString2 = ToUpper;
 
-// Func<int, DateTime, string, decimal> someFunc; ;
-// Action<string, string, bool> someAction; ;
+Console.WriteLine(processString1("Heloooooooooo"));
+Console.WriteLine(processString2("Heloooooooooo"));
 
-Func<int, bool> predicate1 = IsLargerThen10;
-Console.WriteLine("IsAnyLargerThen10? " + IsAny(numbers, predicate1));
-Console.WriteLine("IsAnyLargerThen10? " + IsAny(numbers, IsLargerThen10));
+Print print1 = text => Console.WriteLine(text.ToUpper());
+Print print2 = text => Console.WriteLine(text.ToLower());
+Print multicast = print1 + print2;
 
-// Lambda expression
-Console.WriteLine("IsAnyLargerThen10? " + IsAny(numbers, n => n > 10));
+Print print4 = text => Console.WriteLine(text.Substring(0, 4));
+multicast += print4;
 
-Func<int, bool> predicate2 = IsEven;
-Console.WriteLine("IsAnyEvan? " + IsAny(numbers, predicate2));
-Console.WriteLine("IsAnyEvan? " + IsAny(numbers, IsEven));
+multicast("Crocodile");
 
-// Lambda expression
-Console.WriteLine("IsAnyEvan? " + IsAny(numbers, n => n % 2 == 0));
+Func<string, string, int> sumLengths = (text1, text2) => text1.Length + text2.Length;
 
-bool IsLargerThen10(int number)
+string TrimTo5Letters(string input)
 {
-	return number > 10;
+	return input.Substring(0, 5);
 }
 
-bool IsEven(int number)
+string ToUpper(string input)
 {
-	return number % 2 == 0;
+	return input.ToUpper();
 }
 
-bool IsAny(IEnumerable<int> numbers, Func<int, bool> predicate)
-{
-	foreach (int number in numbers)
-	{
-		if (predicate(number))
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
+delegate string ProcessString(string input);
+delegate void Print(string input);
