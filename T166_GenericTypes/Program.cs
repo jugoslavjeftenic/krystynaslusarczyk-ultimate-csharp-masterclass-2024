@@ -1,29 +1,26 @@
-﻿ProcessString processString1 = TrimTo5Letters;
-ProcessString processString2 = ToUpper;
+﻿var countryToCurrencyMapping = new Dictionary<string, string>();
+countryToCurrencyMapping.Add("USA", "USD");
+countryToCurrencyMapping.Add("India", "INR");
+countryToCurrencyMapping.Add("Spain", "EUR");
+countryToCurrencyMapping.Add("Italy", "EUR");
 
-Console.WriteLine(processString1("Heloooooooooo"));
-Console.WriteLine(processString2("Heloooooooooo"));
+Console.WriteLine("Currency in Spain is " + countryToCurrencyMapping["Spain"]);
 
-Print print1 = text => Console.WriteLine(text.ToUpper());
-Print print2 = text => Console.WriteLine(text.ToLower());
-Print multicast = print1 + print2;
+countryToCurrencyMapping["Poland"] = "PLN";
+//countryToCurrencyMapping.Add("Poland", "EUR");
+countryToCurrencyMapping["Poland"] = "EUR";
 
-Print print4 = text => Console.WriteLine(text.Substring(0, 4));
-multicast += print4;
+Console.WriteLine("Currency in Poland is " + countryToCurrencyMapping["Poland"]);
 
-multicast("Crocodile");
-
-Func<string, string, int> sumLengths = (text1, text2) => text1.Length + text2.Length;
-
-string TrimTo5Letters(string input)
+var initializedCountryToCurrencyMapping = new Dictionary<string, string>()
 {
-	return input.Substring(0, 5);
-}
+	["SRB"] = "RSD",
+	["HU"] = "HUF",
+	["MK"] = "MKD"
+};
 
-string ToUpper(string input)
+foreach (var countryCurrencyPair in initializedCountryToCurrencyMapping)
 {
-	return input.ToUpper();
+	Console.WriteLine(
+		$"Country: {countryCurrencyPair.Key}, currency: {countryCurrencyPair.Value}");
 }
-
-delegate string ProcessString(string input);
-delegate void Print(string input);
