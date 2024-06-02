@@ -1,50 +1,67 @@
-﻿var employees = new List<Employee>
+﻿
+var numbers = new List<int> { 10, 12, -100, 55, 17, 22 };
+
+Console.WriteLine("Select filter: Even, Odd, Positive");
+var userInput = Console.ReadLine() ?? "";
+
+List<int> result = new NumbersFilter().FilterBy(userInput, numbers);
+
+Print(result);
+
+void Print(IEnumerable<int> numbers)
 {
-	new( "Jake Smith", "Space Navigation", 25000 ),
-	new( "Anna Blake", "Space Navigation", 29000 ),
-	new( "Barbara Oak", "Xenobiology", 21500 ),
-	new( "Damien Parker", "Xenobiology", 22000 ),
-	new( "Nisha Patel", "Mechanics", 21000 ),
-	new( "Gustavo Sanchez", "Mechanics", 20000 )
-};
-
-var result = CalculateAverageSalaryPerDepartment(employees);
-
-Dictionary<string, decimal> CalculateAverageSalaryPerDepartment(IEnumerable<Employee> employees)
-{
-	var employeesPerDepartments = new Dictionary<string, List<Employee>>();
-
-	foreach (var employee in employees)
-	{
-		if (employeesPerDepartments.ContainsKey(employee.Department) is false)
-		{
-			employeesPerDepartments[employee.Department] = [];
-		}
-
-		employeesPerDepartments[employee.Department].Add(employee);
-	}
-
-	var result = new Dictionary<string, decimal>();
-
-	foreach (var employeesPerDepartment in employeesPerDepartments)
-	{
-		decimal sumOfSalaries = 0;
-
-		foreach (var employee in employeesPerDepartment.Value)
-		{
-			sumOfSalaries += employee.MonthlySalary;
-		}
-
-		var average = sumOfSalaries / employeesPerDepartment.Value.Count;
-		result[employeesPerDepartment.Key] = average;
-	}
-
-	return result;
+	Console.WriteLine(string.Join(", ", numbers));
 }
 
-public class Employee(string name, string department, decimal monthlySalary)
+public class NumbersFilter
 {
-	public string Name { get; init; } = name;
-	public string Department { get; init; } = department;
-	public decimal MonthlySalary { get; set; } = monthlySalary;
+	public List<int> FilterBy(string filteringType, List<int> numbers)
+	{
+		switch (filteringType)
+		{
+			case "Even":
+				return SelectEven(numbers);
+			case "Odd":
+				return SelectOdd(numbers);
+			case "Positive":
+				return SelectPositive(numbers);
+			default:
+				throw new NotSupportedException($"{filteringType} is not a valid filter");
+		};
+	}
+	private List<int> SelectEven(List<int> numbers)
+	{
+		var result = new List<int>();
+
+		foreach (var number in numbers)
+		{
+			if (number % 2 == 0) result.Add(number);
+		}
+
+		return result;
+	}
+
+	private List<int> SelectOdd(List<int> numbers)
+	{
+		var result = new List<int>();
+
+		foreach (var number in numbers)
+		{
+			if (number % 2 == 1) result.Add(number);
+		}
+
+		return result;
+	}
+
+	private List<int> SelectPositive(List<int> numbers)
+	{
+		var result = new List<int>();
+
+		foreach (var number in numbers)
+		{
+			if (number > 0) result.Add(number);
+		}
+
+		return result;
+	}
 }
