@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "T157_Assignment_GameDataPar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "T159_Solution_GameDataParser", "T159_Solution_GameDataParser\T159_Solution_GameDataParser.csproj", "{B3AD58FE-729C-476D-81B4-2E5299DE754C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T166_GenericTypes", "T166_GenericTypes\T166_GenericTypes.csproj", "{96655498-BB0B-42C8-BB40-09BC0D04767C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "T166_GenericTypes", "T166_GenericTypes\T166_GenericTypes.csproj", "{96655498-BB0B-42C8-BB40-09BC0D04767C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T196_Assignment_CustomCache", "T196_Assignment_CustomCache\T196_Assignment_CustomCache.csproj", "{1ACCE1E5-A60D-42DA-9E9B-7827C3503B4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{96655498-BB0B-42C8-BB40-09BC0D04767C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96655498-BB0B-42C8-BB40-09BC0D04767C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96655498-BB0B-42C8-BB40-09BC0D04767C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ACCE1E5-A60D-42DA-9E9B-7827C3503B4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ACCE1E5-A60D-42DA-9E9B-7827C3503B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ACCE1E5-A60D-42DA-9E9B-7827C3503B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ACCE1E5-A60D-42DA-9E9B-7827C3503B4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
